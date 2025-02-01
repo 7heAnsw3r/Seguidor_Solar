@@ -1,4 +1,4 @@
-## Seguidor Solar de 2 Grados de Libertad ☀️
+## Seguidor Solar☀️
 
 Este proyecto implementa un simulador de un seguidor solar de 2 grados de libertad, que calcula los ángulos de control *pitch* y *roll* para mantener un panel solar perpendicular a la luz solar incidente durante un día determinado. 
 
