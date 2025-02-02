@@ -9,11 +9,23 @@ Este proyecto implementa un simulador de un seguidor solar de 2 grados de libert
 *  Visualiza la trayectoria del sol y el panel solar en 3D. 📊
 *  Permite al usuario ingresar la fecha y la duración de la simulación a través de una interfaz gráfica. 📅
 
+**Paquetes que se Utilizaron**
+
++ pysolar 
++ matplotlib 
++ numpy 
++ pytz 
++ tkcalendar 
++ datetime 
++ mpl_toolkits.mplot3d 
++ animation 
++ tkinter
+
 **Cómo ejecutar el código:**
 
 1.  **Instalar las dependencias:**
     ```bash
-    pip install pysolar matplotlib numpy pytz tkcalendar datetime mpl_toolkits.mplot3d animation tkinter
+    pip install -r requirements.txt
     ```
 
 2.  **Ejecutar el archivo principal:**
