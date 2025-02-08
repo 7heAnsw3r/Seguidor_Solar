@@ -1,7 +1,4 @@
-from src import sun_position
-from src import panel_position
-from src import datetime_picker
-from src import sun_path
+from src import sun_position, panel_position, datetime_picker, sun_path
 from pytz import timezone
 from datetime import datetime, timedelta
 
