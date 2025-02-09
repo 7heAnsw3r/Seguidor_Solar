@@ -92,6 +92,8 @@ def generar_reporte(fecha, hora_inicio, hora_fin):
     print(f"Reporte generado exitosamente: {pdf_filename}")
 
     # Eliminar los archivos de imágenes temporales
+    plt.close('all')  # Cierra todas las figuras activas
+
     os.remove(img_path1)
     os.remove(img_path2)
 
@@ -110,7 +112,7 @@ def generar_reporte(fecha, hora_inicio, hora_fin):
         
         # Centramos la ventana emergente en la pantalla
         window_width = 400
-        window_height = 200
+        window_height = 100
         screen_width = popup.winfo_screenwidth()
         screen_height = popup.winfo_screenheight()
         position_top = int(screen_height / 2 - window_height / 2)
@@ -120,16 +122,20 @@ def generar_reporte(fecha, hora_inicio, hora_fin):
         # Agregar el ícono
         popup.iconbitmap('C:/Users/User/Desktop/EPN/4. CUARTO SEMESTRE/1. METODOS NUMERICOS/4. PROYECTOS/Seguidor_Solar/Imagenes/panel-solar.ico')
 
-        label = tk.Label(popup, text=f"Reporte PDF guardado como {pdf_filename} en el escritorio.")
+        label = tk.Label(popup, text=f"Reporte generado como {pdf_filename}")
         label.pack(pady=10)
 
-        # Botón para abrir el PDF
-        open_button = tk.Button(popup, text="Abrir PDF", command=open_pdf)
-        open_button.pack(side="left", padx=20)
+      # Crear un frame contenedor para centrar los botones
+        button_frame = tk.Frame(popup)
+        button_frame.pack(pady=10)
 
-        # Botón para aceptar
-        accept_button = tk.Button(popup, text="Aceptar", command=popup.destroy)
-        accept_button.pack(side="right", padx=20)
+        # Botón para abrir el PDF
+        open_button = tk.Button(button_frame, text="Abrir PDF", command=open_pdf)
+        open_button.pack(side="left", padx=10)
+
+        # Botón para cerrar
+        accept_button = tk.Button(button_frame, text="Cerrar", command=popup.destroy)
+        accept_button.pack(side="left", padx=10)
 
         popup.mainloop()
 

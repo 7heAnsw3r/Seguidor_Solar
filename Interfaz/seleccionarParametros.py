@@ -29,6 +29,19 @@ def obtener_fecha_y_horas(callback):
 
     ventana.destroy()
 
+def actualizar_horas_fin(event=None):
+    """Actualiza las opciones del combobox de hora fin
+    para que solo muestre horas posteriores a la hora de inicio."""
+    hora_inicio = combo_inicio.get()
+    try:
+        indice_inicio = horas.index(hora_inicio)
+        horas_fin = horas[indice_inicio + 1:]  # Tomar horas posteriores a la de inicio
+        combo_fin['values'] = horas_fin
+        combo_fin.current(0)  # Seleccionar la primera hora disponible
+    except ValueError:
+        pass  # Ignorar si la hora de inicio no es válida
+
+
 def crear_ventana_datetime(callback):
     global ventana, calendario, combo_inicio, combo_fin, horas  
     ventana = tk.Toplevel()  # Asegura que ventana esté definida
@@ -38,20 +51,22 @@ def crear_ventana_datetime(callback):
     calendario = Calendar(ventana, selectmode="day", year=2025, month=1, day=27)
     calendario.pack(pady=10)
 
+    # Crear Combobox para seleccionar horas de inicio y fin
     label_inicio = tk.Label(ventana, text="Hora de inicio:")
     label_inicio.pack(pady=5)
-    horas = [f"{i:02d}" for i in range(24)]
+    horas = [f"{i:02d}" for i in range(24)]  # Lista de horas en formato 24h
     combo_inicio = ttk.Combobox(ventana, values=horas, state="readonly")
-    combo_inicio.current(0)
+    combo_inicio.current(0)  # Establecer la primera hora como valor predeterminado
     combo_inicio.pack(pady=5)
+    combo_inicio.bind("<<ComboboxSelected>>", actualizar_horas_fin)  # Llamar a la función al cambiar la hora de inicio
 
     label_fin = tk.Label(ventana, text="Hora de fin:")
     label_fin.pack(pady=5)
     combo_fin = ttk.Combobox(ventana, values=horas, state="readonly")
-    combo_fin.current(1)  
+    combo_fin.current(0)  # Establecer la primera hora como valor predeterminado
     combo_fin.pack(pady=5)
 
-    boton_seleccionar = tk.Button(ventana, text="Seleccionar Fecha y Horas", 
-                                  command=lambda: obtener_fecha_y_horas(callback))
+    # Botón para obtener la fecha y horas seleccionadas
+    boton_seleccionar = tk.Button(ventana, text="Seleccionar Fecha y Horas", command=lambda: obtener_fecha_y_horas(callback))
     boton_seleccionar.pack(pady=10)
     ventana.mainloop()

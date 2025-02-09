@@ -57,10 +57,6 @@ def reporte():
         inicio_str = label_inicio.cget("text").replace("Hora de inicio: ", "")
         fin_str = label_fin.cget("text").replace("Hora de fin: ", "")
 
-        if fecha_str == "--" or inicio_str == "--" or fin_str == "--":
-            print("⚠️ Error: No se han seleccionado parámetros válidos.")
-            return
-
         # Convertir fecha a tipo `datetime.date`
         try:
             fecha = datetime.strptime(fecha_str, "%Y-%m-%d").date()  # Ajusta el formato si es necesario
@@ -85,9 +81,6 @@ def reporte():
             file.write(reporte_texto)
 
         print(f"✅ Reporte generado: {ruta_reporte}")
-
-    else:
-        print("⚠️ Error: No se han inicializado los labels de parámetros.")
 
 
 # Crear la ventana de bienvenida
