@@ -1,5 +1,6 @@
 from pysolar.solar import get_altitude, get_azimuth
 from datetime import datetime, timedelta
+import pytz
 import numpy as np
 
 def Rxyz(alpha, beta, gamma):
@@ -67,6 +68,8 @@ def getSolarPosition(
           - beta (list): Lista de ángulos de pitch.
           - alpha (list): Lista de ángulos de roll.
     """
+    # Definir la zona horaria (ajústalo según tu ubicación)
+    timezone = pytz.timezone('America/Guayaquil')
     times = []
     azimuths = []
     elevations = []
@@ -76,10 +79,18 @@ def getSolarPosition(
     time_interval = timedelta(minutes=10)
 
     # Crear el rango de tiempos basado en la hora de inicio y fin
-    start_time = start_date.replace(hour=start_hour, minute=0, second=0, microsecond=0)
-    end_time = start_date.replace(hour=end_hour, minute=0, second=0, microsecond=0)
+    if isinstance(start_date, str):  
+      start_date = datetime.strptime(start_date, "%Y-%m-%d")  # Ajusta el formato según tu fecha
+
+    start_time = datetime.combine(start_date, datetime.min.time()).replace(hour=start_hour, minute=0, second=0, microsecond=0)
+    end_time = datetime.combine(start_date, datetime.min.time()).replace(hour=end_hour, minute=0, second=0, microsecond=0)
+
+    # Asociar la zona horaria a las fechas
+    start_time = timezone.localize(start_time)
+    end_time = timezone.localize(end_time)
 
     current_time = start_time
+
     while current_time <= end_time:
         az = get_azimuth(latitude, longitude, current_time)
         el = get_altitude(latitude, longitude, current_time)

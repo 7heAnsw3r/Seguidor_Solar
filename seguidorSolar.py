@@ -1,7 +1,9 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 from functools import partial
+from datetime import datetime
 from Interfaz.seleccionarParametros import crear_ventana_datetime
+from Interfaz.generarReporte import generar_reporte
 
 label_fecha = None
 label_inicio = None
@@ -47,8 +49,46 @@ def actualizar_parametros(fecha, hora_inicio, hora_fin):
     boton_iniciar.pack(pady=10)
     boton_icono.place(relx=1.0, rely=1.0, anchor="se", x=-10, y=-10)
 
+
 def reporte():
-    print("¡Botón clickeado!")
+    """Genera y guarda un reporte con los parámetros seleccionados."""
+    if label_fecha and label_inicio and label_fin:
+        fecha_str = label_fecha.cget("text").replace("Fecha: ", "")
+        inicio_str = label_inicio.cget("text").replace("Hora de inicio: ", "")
+        fin_str = label_fin.cget("text").replace("Hora de fin: ", "")
+
+        if fecha_str == "--" or inicio_str == "--" or fin_str == "--":
+            print("⚠️ Error: No se han seleccionado parámetros válidos.")
+            return
+
+        # Convertir fecha a tipo `datetime.date`
+        try:
+            fecha = datetime.strptime(fecha_str, "%Y-%m-%d").date()  # Ajusta el formato si es necesario
+        except ValueError:
+            print(f"⚠️ Error: Formato de fecha inválido ({fecha_str}).")
+            return
+
+        # Convertir horas a enteros
+        try:
+            inicio = int(inicio_str.split(":")[0])  # Tomamos solo la hora
+            fin = int(fin_str.split(":")[0])
+        except ValueError:
+            print(f"⚠️ Error: Formato de hora inválido ({inicio_str}, {fin_str}).")
+            return
+
+        # Llamar a la función que genera el reporte, ahora con las variables correctas
+        reporte_texto = generar_reporte(fecha, inicio, fin)  # Aquí pasas las variables correctas
+
+        # Guardar el reporte en un archivo
+        ruta_reporte = f"Reporte_Solar_{fecha_str.replace('/', '-')}.txt"
+        with open(ruta_reporte, "w", encoding="utf-8") as file:
+            file.write(reporte_texto)
+
+        print(f"✅ Reporte generado: {ruta_reporte}")
+
+    else:
+        print("⚠️ Error: No se han inicializado los labels de parámetros.")
+
 
 # Crear la ventana de bienvenida
 bienvenida = tk.Tk()
