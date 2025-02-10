@@ -3,5 +3,12 @@ matplotlib
 pysolar
 tkcalendar
 pytz
+fpdf
+Pillow
 datetime
 animation
+functools
+os
+io
+webbrowser
+tkinter
