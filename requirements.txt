@@ -1,14 +1,9 @@
-numpy
-matplotlib
-pysolar
-tkcalendar
-pytz
-fpdf
-Pillow
+numpy==2.1.1
+matplotlib== 3.9.2
+pysolar==0.13
+tkcalendar==1.6.1
+pytz==2024.2
+fpdf==1.7.2
+pillow==10.4.0
 datetime
-animation
-functools
-os
-io
-webbrowser
-tkinter
+animation==0.0.7
