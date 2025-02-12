@@ -4,12 +4,15 @@ from functools import partial
 from datetime import datetime
 from Interfaz.seleccionarParametros import crear_ventana_datetime
 from Interfaz.generarReporte import generar_reporte
+from Interfaz.calculoAngulos import getSolarPosition
+from Interfaz.posicionSistema import visualizar_trayectoria_panel_y_sol
 
 label_fecha = None
 label_inicio = None
 label_fin = None
 boton_iniciar = None
 botton_icono = None
+main_area = None
 
 def centrar_ventana(ventana):
     """
@@ -48,6 +51,19 @@ def actualizar_parametros(fecha, hora_inicio, hora_fin):
         label_fin.config(text=f"Hora de fin: {hora_fin}")
     boton_iniciar.pack(pady=10)
     boton_icono.place(relx=1.0, rely=1.0, anchor="se", x=-10, y=-10)
+
+
+def simulacion():
+    times, azimuths, elevations, beta, alpha = getSolarPosition(
+            label_fecha.cget("text"),
+            label_inicio.cget("text"),
+            label_fin.cget("text")
+        )
+    
+    phi = alpha
+
+    visualizar_trayectoria_panel_y_sol(times, azimuths, elevations, beta, phi)
+
 
 def reporte():
     """Genera y guarda un reporte con los parámetros seleccionados."""
@@ -112,7 +128,7 @@ boton_continuar.pack(pady=10)
 
 # Función para abrir la ventana principal
 def abrir_interfaz_principal():
-    global label_fecha, label_inicio, label_fin, boton_iniciar, boton_icono
+    global label_fecha, label_inicio, label_fin, boton_iniciar, boton_icono, main_area
 
     raiz = tk.Tk()
     raiz.resizable(False, False)
@@ -160,8 +176,9 @@ def abrir_interfaz_principal():
 
     # Botón de inio de simulación
     boton_iniciar = tk.Button(left_panel, text="Iniciar Simulación!", 
-                                 command=partial(print, "Iniciando simulación..."), 
-                                 font=("Arial", 12, "bold"), bg="#ffc133", fg="black", padx=10, pady=5, cursor="hand2")
+                          font=("Arial", 12, "bold"), bg="#ffc133", 
+                          fg="black", padx=10, pady=5, cursor="hand2", 
+                          command=simulacion) 
     boton_iniciar.pack(pady=10)
     boton_iniciar.pack_forget()
 
