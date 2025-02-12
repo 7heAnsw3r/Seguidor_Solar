@@ -17,10 +17,6 @@ def visualizar_trayectoria_panel_y_sol(frame_padre, tiempos, azimuts, elevacione
     marco_3d = tk.Frame(frame_padre)
     marco_3d.pack(fill=tk.BOTH, expand=True)
 
-    # Etiqueta para mostrar la hora dentro del área principal
-    etiqueta_hora = tk.Label(frame_padre, text="", font=("Arial", 14))
-    etiqueta_hora.pack(pady=5)
-
     figura = plt.Figure(figsize=(10, 7), dpi=100)
     ejes = figura.add_subplot(111, projection='3d')
 
@@ -88,7 +84,9 @@ def visualizar_trayectoria_panel_y_sol(frame_padre, tiempos, azimuts, elevacione
             ejes.quiver(0, 0, 0, 5, 0, 0, color='blue', linewidth=2)
             ejes.text(5.2, 0, 0, "Este", color='blue', fontsize=12)
 
-            etiqueta_hora.config(text=tiempos[fotograma].strftime("Hora: %Hh%M\nFecha: %Y-%m-%d"))
+            # Agregar la etiqueta de tiempo dentro del gráfico
+            ejes.text2D(0.05,0.05, tiempos[fotograma].strftime("Hora: %H:%M\nFecha: %Y-%m-%d"), 
+                        transform=figura.transFigure, fontsize=12, color='black', bbox=dict(facecolor='white', alpha=0.7))
 
         return [panel]
 

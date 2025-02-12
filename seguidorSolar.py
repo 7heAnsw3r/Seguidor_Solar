@@ -36,7 +36,7 @@ def crear_boton_icono(parent, ruta_icono, comando):
         print(f"Error: No se encontró el icono en {ruta_icono}")
         return None
 
-    boton = tk.Button(parent, image=icono, command=comando, borderwidth=0, cursor="hand2", bg="#e4e4e4")
+    boton = tk.Button(parent, image=icono, command=comando, borderwidth=0, cursor="hand2", bg="white")
     boton.image = icono  # Guardar referencia para evitar que se borre
 
     return boton
@@ -190,7 +190,7 @@ def abrir_interfaz_principal():
 
     # Botón de generación de reporte
     ruta_icono = r"./Imagenes/imprimir.ico"
-    boton_icono = crear_boton_icono(main_area, ruta_icono, reporte)
+    boton_icono = crear_boton_icono(left_panel, ruta_icono, reporte)
     boton_icono.place_forget()
 
     raiz.mainloop()
