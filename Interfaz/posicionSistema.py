@@ -6,16 +6,19 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
 from Interfaz.calculoAngulos import getSolarPosition, Rxyz
 
-def visualizar_trayectoria_panel_y_sol(tiempos, azimuts, elevaciones, beta, phi):
-    ventana_principal = tk.Tk()
-    ventana_principal.title("Simulación del Movimiento del Panel Solar y del Sol")
+def visualizar_trayectoria_panel_y_sol(frame_padre, tiempos, azimuts, elevaciones, beta, phi):
+    """Renderiza la simulación dentro de un frame de Tkinter en la interfaz principal."""
+    
+    # Limpiar cualquier contenido previo en el frame
+    for widget in frame_padre.winfo_children():
+        widget.destroy()
 
-    # Marco para el gráfico 3D
-    marco_3d = tk.Frame(ventana_principal)
+    # Marco para el gráfico 3D dentro del frame
+    marco_3d = tk.Frame(frame_padre)
     marco_3d.pack(fill=tk.BOTH, expand=True)
 
-    # Etiqueta para mostrar la hora en la ventana
-    etiqueta_hora = tk.Label(ventana_principal, text="", font=("Arial", 14))
+    # Etiqueta para mostrar la hora dentro del área principal
+    etiqueta_hora = tk.Label(frame_padre, text="", font=("Arial", 14))
     etiqueta_hora.pack(pady=5)
 
     figura = plt.Figure(figsize=(10, 7), dpi=100)
@@ -64,8 +67,8 @@ def visualizar_trayectoria_panel_y_sol(tiempos, azimuts, elevaciones, beta, phi)
             ejes.add_collection3d(panel)
 
             azimuth, elevation = azimuts[fotograma], elevaciones[fotograma]
-            sun_size = 1.0 + (elevation / 90) * 0.5  # Sol más grande en función de la elevación
-            r = 10  # Radio de la trayectoria solar
+            sun_size = 1.0 + (elevation / 90) * 0.5  
+            r = 10  
             sun_position = [
                 r * np.cos(np.radians(elevation)) * np.sin(np.radians(azimuth)),
                 r * np.cos(np.radians(elevation)) * np.cos(np.radians(azimuth)),
@@ -85,13 +88,12 @@ def visualizar_trayectoria_panel_y_sol(tiempos, azimuts, elevaciones, beta, phi)
             ejes.quiver(0, 0, 0, 5, 0, 0, color='blue', linewidth=2)
             ejes.text(5.2, 0, 0, "Este", color='blue', fontsize=12)
 
-            # Actualizar la etiqueta de la hora en la ventana
             etiqueta_hora.config(text=tiempos[fotograma].strftime("Hora: %Hh%M\nFecha: %Y-%m-%d"))
 
         return [panel]
 
-    canvas3 = FigureCanvasTkAgg(figura, master=marco_3d)
-    canvas3.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+    canvas = FigureCanvasTkAgg(figura, master=marco_3d)
+    canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
     animacion = animation.FuncAnimation(figura, actualizar_animacion, frames=len(tiempos), interval=200, blit=False)
     
-    ventana_principal.mainloop()
+    frame_padre.update_idletasks()

@@ -55,14 +55,15 @@ def actualizar_parametros(fecha, hora_inicio, hora_fin):
 
 def simulacion():
     times, azimuths, elevations, beta, alpha = getSolarPosition(
-            label_fecha.cget("text"),
-            label_inicio.cget("text"),
-            label_fin.cget("text")
-        )
+        label_fecha.cget("text"),
+        label_inicio.cget("text"),
+        label_fin.cget("text")
+    )
     
     phi = alpha
 
-    visualizar_trayectoria_panel_y_sol(times, azimuths, elevations, beta, phi)
+    # Llamar a la función modificada pasando main_area
+    visualizar_trayectoria_panel_y_sol(main_area, times, azimuths, elevations, beta, phi)
 
 
 def reporte():
