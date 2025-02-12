@@ -120,7 +120,7 @@ def generar_reporte(fecha, hora_inicio, hora_fin):
         popup.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
         
         # Agregar el ícono
-        popup.iconbitmap('C:/Users/User/Desktop/EPN/4. CUARTO SEMESTRE/1. METODOS NUMERICOS/4. PROYECTOS/Seguidor_Solar/Imagenes/panel-solar.ico')
+        popup.iconbitmap('./Imagenes/panel-solar.ico')
 
         label = tk.Label(popup, text=f"Reporte generado como {pdf_filename}")
         label.pack(pady=10)

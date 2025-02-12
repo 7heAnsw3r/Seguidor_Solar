@@ -149,7 +149,7 @@ def abrir_interfaz_principal():
     titulo.pack(pady=20, anchor="n")
 
     # Logo
-    logo_path = r"C:\Users\User\Desktop\EPN\4. CUARTO SEMESTRE\1. METODOS NUMERICOS\4. PROYECTOS\Seguidor_Solar\Imagenes\panel-solar.png"
+    logo_path = r"./Imagenes/panel-solar.png"
     logo_img = Image.open(logo_path)
     logo_img = logo_img.resize((120, 120))  # Ajustar tamaño
     logo_img = ImageTk.PhotoImage(logo_img)
@@ -188,7 +188,7 @@ def abrir_interfaz_principal():
     main_area.pack_propagate(False) 
 
     # Botón de generación de reporte
-    ruta_icono = r"C:\Users\User\Desktop\EPN\4. CUARTO SEMESTRE\1. METODOS NUMERICOS\4. PROYECTOS\Seguidor_Solar\Imagenes\imprimir.ico"
+    ruta_icono = r"./Imagenes/imprimir.ico"
     boton_icono = crear_boton_icono(main_area, ruta_icono, reporte)
     boton_icono.place_forget()
 
