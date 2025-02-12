@@ -12,8 +12,16 @@ def generar_reporte(fecha, hora_inicio, hora_fin):
     """
     Genera un reporte con los cálculos y gráficas en formato PDF sin guardar imágenes permanentes,
     guardado en el escritorio con nombre de archivo incremental.
+
+    Args:
+        fecha (datetime): Fecha en que se realiza la simulación.
+        hora_inicio (int): Hora de inicio de la simulación.
+        hora_fin (int): Hora de fin de la simulación.
+
+    Returns:
+        str: Mensaje indicando el nombre del archivo PDF generado.
     """
-    # Obtener datos
+    # Obtener datos de la simulación solar (azimut, elevación, etc.)
     times, azimuths, elevations, beta, alpha = getSolarPosition(
         start_date=fecha, start_hour=hora_inicio, end_hour=hora_fin
     )
@@ -125,7 +133,7 @@ def generar_reporte(fecha, hora_inicio, hora_fin):
         label = tk.Label(popup, text=f"Reporte generado como {pdf_filename}")
         label.pack(pady=10)
 
-      # Crear un frame contenedor para centrar los botones
+        # Crear un frame contenedor para centrar los botones
         button_frame = tk.Frame(popup)
         button_frame.pack(pady=10)
 
@@ -142,4 +150,4 @@ def generar_reporte(fecha, hora_inicio, hora_fin):
     # Mostrar la ventana emergente con botones
     show_popup()
 
-    return f"Reporte PDF guardado como {pdf_filename} en el escritorio." 
+    return f"Reporte PDF guardado como {pdf_filename} en el escritorio."
